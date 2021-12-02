@@ -2,20 +2,35 @@
 let convertFromDropDown = document.getElementById("converter-from-dropdown");
 let convertToDropDown = document.getElementById("converter-to-dropdown");
 
-// #1. Make sure that if one dropdown has a value, the other dropdown isn't the same value
-    // listen for a change in "convert from" dropdown
-    convertFromDropDown.addEventListener("change", converterOptionChange);
+// listen for a change in "convert from" dropdown
+convertFromDropDown.addEventListener("change", converterOptionChange);
 
+// #2. conversions for each: 
+    // binary to decimal
+    // decimal to binary
+
+    // binary to hex
+    // hex to binary
+
+    // hex to decimal
+    // decimal to hex
+
+// #3. random value generator logic and correct answer
+
+
+/* This function makes sure that if one dropdown has a value, the other dropdown isn't doesn't have the same value */
 function converterOptionChange() {
     let binaryOptionFrom = convertFromDropDown.firstElementChild;
     let hexOptionFrom = convertFromDropDown.lastElementChild;
     
     // remove all children from "convert to" dropdown
     let children = convertToDropDown.children;
-    for (let i = 0; i < children.length; i++) {
+
+    // no need to increment i because of element removal each iteration
+    for (let i = 0; i < children.length; ) {
         children[i].remove();
     }
-    
+    console.log(children);
     // if the first child of convertFromDropDown is selected
     if (binaryOptionFrom.selected) {
         // create decimal and hex options in "convert to" dropdown
@@ -57,16 +72,3 @@ function converterOptionChange() {
         convertToDropDown.appendChild(hexOptionTo);
     }
 }
-
-
-// #2. conversions for each: 
-    // binary to decimal
-    // decimal to binary
-
-    // binary to hex
-    // hex to binary
-
-    // hex to decimal
-    // decimal to hex
-
-// #3. random value generator logic and correct answer
