@@ -4,7 +4,7 @@ import * as TextboxHandler from './modules/textbox-handler.js';
 // listen for a change in "convert from" dropdown, change "convert to" dropdown appropriately
 TextboxHandler.convertFromDropDown.addEventListener("change", TextboxHandler.converterOptionChange);
 
-// select converter button and listen for "click event". make appropriate conversion
+// select converter button and listen for click event then make appropriate conversion
 document.getElementById("converter-button").addEventListener("click", (e) => {
     e.preventDefault();
     let conversion = Conversions.detectConversion();
@@ -12,8 +12,6 @@ document.getElementById("converter-button").addEventListener("click", (e) => {
 });
 
 // #2. conversions to do: 
-    // decimal to binary
-
     // binary to hex
     // hex to binary
 

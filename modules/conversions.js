@@ -55,7 +55,7 @@ function makeConversionCall(conversion) {
     } 
     // if "from" is decimal
     else if (conversion[0] == "d") {
-        // and if "to" is binary
+        decimalToBinary();
         if (conversion[1] == "b") {
         }
         // and if "to" is hex
@@ -83,47 +83,40 @@ function binaryToDecimal() {
 
     // iterate backwards
     for (let i = binary.length - 1; i > -1; i--) {
+        // get the position (from right to left starting with 1)
         let position = binary.length - i;
         console.log("position: " + position + ", value: " + binary[i]);
-        switch(position) {
-            case 1: if (binary[i] == "1") {
-                        decimal += 1;
-                    }
-                    break;
-            case 2: if (binary[i] == "1") {
-                        decimal += 2;
-                    }
-                    break;
-            case 3: if (binary[i] == "1") {
-                        decimal += 4;
-                        console.log(decimal);
-                    }
-                    break;
-            case 4: if (binary[i] == "1") {
-                        decimal += 8;
-                    }
-                    break;
-            case 5: if (binary[i] == "1") {
-                        decimal += 16;
-                    }
-                    break;
-            case 6: if (binary[i] == "1") {
-                        decimal += 32;
-                    }
-                    break;
-            case 7: if (binary[i] == "1") {
-                    decimal += 64;
-                }
-                    break;
-            case 8: if (binary[i] == "1") {
-                        decimal += 128;
-                    }
-                    break;
-        }
 
+        // if there is a 1 in the position, add the proper value
+        if (binary[i] == "1") {
+            decimal += 2**(position - 1);
+        }
     }
 
     document.getElementById("converter-to-textbox").value = decimal;
 }
 
-export {detectConversion, makeConversionCall, binaryToDecimal};
+function decimalToBinary() {
+    // select "convert from" textbox
+    let decimal = document.getElementById("converter-from-textbox").value;
+    let binary = "";
+
+    /* To convert a decimal to binary, divide it repeatedly by 2 and note the remainders. take the reverse as the binary representation: https://www.cuemath.com/numbers/decimal-to-binary/ */
+
+    // while we still have a number we need to divide
+    while (decimal != 0) {
+        // check if it is divisible by two or no and add the appropriate value to the string
+        if (decimal % 2 != 0) {
+            decimal = Math.floor(decimal / 2); 
+            binary += "1";
+        } else {
+            decimal = Math.floor(decimal / 2); 
+            binary += "0";
+        }
+    }
+
+    // change from string to array, reverse, change back to string, and change the "convert to" input value
+    document.getElementById("converter-to-textbox").value = binary.split("").reverse().join("");
+
+}
+export {detectConversion, makeConversionCall, binaryToDecimal, decimalToBinary};
