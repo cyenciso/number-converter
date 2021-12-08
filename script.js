@@ -12,7 +12,6 @@ document.getElementById("converter-button").addEventListener("click", (e) => {
 });
 
 // #2. conversions to do: 
-    // binary to hex
     // hex to binary
 
     // hex to decimal

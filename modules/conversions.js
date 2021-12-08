@@ -42,20 +42,22 @@ function detectConversion() {
 
 function makeConversionCall(conversion) {
     // call appropriate conversion function
+    let value = document.getElementById("converter-from-textbox").value;
+
     // if "from" is binary
     if (conversion[0] == "b") {
         // and if "to" is decimal
         if (conversion[1] == "d") {
-            binaryToDecimal();
+            document.getElementById("converter-to-textbox").value = binaryToDecimal(value);
         }
         // and if "to" is hex
         else {
-
+            document.getElementById("converter-to-textbox").value = binaryToHex(value);
         }
     } 
     // if "from" is decimal
     else if (conversion[0] == "d") {
-        decimalToBinary();
+        document.getElementById("converter-to-textbox").value = decimalToBinary(value);
         if (conversion[1] == "b") {
         }
         // and if "to" is hex
@@ -76,9 +78,9 @@ function makeConversionCall(conversion) {
 }
 
 /* this function converts from a binary value to a decimal value */
-function binaryToDecimal() {
+function binaryToDecimal(value) {
     // select "convert from" textbox
-    let binary = document.getElementById("converter-from-textbox").value;
+    let binary = value;
     let decimal = 0;
 
     // iterate backwards
@@ -93,12 +95,12 @@ function binaryToDecimal() {
         }
     }
 
-    document.getElementById("converter-to-textbox").value = decimal;
+    return decimal;
 }
 
-function decimalToBinary() {
+function decimalToBinary(value) {
     // select "convert from" textbox
-    let decimal = document.getElementById("converter-from-textbox").value;
+    let decimal = value;
     let binary = "";
 
     /* To convert a decimal to binary, divide it repeatedly by 2 and note the remainders. take the reverse as the binary representation: https://www.cuemath.com/numbers/decimal-to-binary/ */
@@ -115,8 +117,73 @@ function decimalToBinary() {
         }
     }
 
-    // change from string to array, reverse, change back to string, and change the "convert to" input value
-    document.getElementById("converter-to-textbox").value = binary.split("").reverse().join("");
-
+    // change from string to array, reverse, change back to string
+    binary = binary.split("").reverse().join("");
+    return binary;
 }
-export {detectConversion, makeConversionCall, binaryToDecimal, decimalToBinary};
+
+function binaryToHex(value) {
+    // select "convert from" textbox
+    let binary = value;
+    let hex = "";
+
+    // break up bits into nibbles and save into an array
+    let arrayOfNibbles = [];
+
+    // iterate backwards
+    for (let i = binary.length - 1; i > -1; i -= 4) {
+        let nibble = "";
+
+        // if you have four bits to group
+        if (i - 3 > -1) {
+            nibble = binary[i-3]  + binary[i-2]  + binary[i-1]  + binary[i]; 
+        } 
+        // if you have 3 bits to group
+        else if (i - 2 > -1) {
+            nibble = binary[i-2]  + binary[i-1]  + binary[i]; 
+        }
+        // if you have 2 bits to group
+        else if (i - 1 > -1) {
+            nibble = binary[i-1]  + binary[i]; 
+        }
+        // if you have 1 bit to group
+        else {
+            nibble = binary[i];
+        }
+
+        arrayOfNibbles.unshift(nibble);
+    }
+
+    console.log(arrayOfNibbles);
+    
+    // then process the array: for every nibble
+    for (let i = 0; i < arrayOfNibbles.length; i++) {
+        // map to hex value and append to hex 
+        // (use binary to decimal for 0-9)
+        if (binaryToDecimal(arrayOfNibbles[i]) < 10) {
+            hex += binaryToDecimal(arrayOfNibbles[i]);
+            console.log(hex);
+        }
+        else {
+            switch(arrayOfNibbles[i]) {
+                case "1010": hex += "A"; 
+                break;
+                case "1011": hex += "B"; 
+                break;
+                case "1100": hex += "C"; 
+                break;
+                case "1101": hex += "D"; 
+                break;
+                case "1110": hex += "E"; 
+                break;
+                case "1011": hex += "F"; 
+                break;
+            }
+            console.log(hex);
+        }
+    }
+
+    return hex;
+}
+
+export {detectConversion, makeConversionCall, binaryToDecimal, decimalToBinary, binaryToHex};
