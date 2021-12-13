@@ -73,7 +73,7 @@ function makeConversionCall(conversion) {
         }
         // and if "to" is decimal
         else {
-            
+            document.getElementById("converter-to-textbox").value = hexToDecimal(value);
         }
     }
 }
@@ -239,4 +239,48 @@ function hexToBinary(value) {
 
     return binary;
 }
-export {detectConversion, makeConversionCall, binaryToDecimal, decimalToBinary, binaryToHex, hexToBinary};
+
+function hexToDecimal(value) {
+    let hex = value;
+    let decimal = 0;
+
+    // iterate backwards
+    for (let i = hex.length - 1; i > -1; i--) {
+        // get the position (from right to left starting with 1)
+        let position = hex.length - i;
+        console.log("position: " + position + ", value: " + hex[i]);
+
+        // multiply the value and the order of magnitude
+        // if already a number, do conversion:
+        if (hex[i] >= 0 && hex[i] <= 9) {
+            decimal += hex[i] * (16**(position - 1));
+        }
+        // else, convert to number then do conversion:
+        else {
+            switch(hex[i].toUpperCase()) {
+                case "A": decimal += 10 * (16**(position - 1)); 
+                break;
+                case "B": decimal += 11 * (16**(position - 1));
+                break;
+                case "C": decimal += 12 * (16**(position - 1));
+                break;
+                case "D": decimal += 13 * (16**(position - 1));
+                break;
+                case "E": decimal += 14 * (16**(position - 1));
+                break;
+                case "F": decimal += 15 * (16**(position - 1)); 
+                break;
+            }
+        }
+            
+    }
+
+    return decimal;
+}
+
+function decimalToHex(value) {
+
+}
+
+
+export {detectConversion, makeConversionCall, binaryToDecimal, decimalToBinary, binaryToHex, hexToBinary, hexToDecimal, decimalToHex};
