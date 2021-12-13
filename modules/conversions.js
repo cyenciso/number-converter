@@ -69,6 +69,7 @@ function makeConversionCall(conversion) {
     else {
         // and if "to" is binary
         if (conversion[1] == "b") {
+            document.getElementById("converter-to-textbox").value = hexToBinary(value);
         }
         // and if "to" is decimal
         else {
@@ -186,4 +187,56 @@ function binaryToHex(value) {
     return hex;
 }
 
-export {detectConversion, makeConversionCall, binaryToDecimal, decimalToBinary, binaryToHex};
+function hexToBinary(value) {
+    let hex = value;
+    let binary = "";
+
+    // every value represents four bits
+    // iterate over hex number
+    for (let i = 0; i < hex.length; i++) {
+        // if the value is 0-9
+        if (hex[i] >= 0 && hex[i] <= 9) {
+            let nibble = decimalToBinary(hex[i]);
+
+            // pad the nibble
+            let padding = 4 - decimalToBinary(hex[i]).length;
+            
+            for (let i = 0; i < padding; i++) {
+                nibble = "0" + nibble;
+            }
+
+            binary += nibble;
+        }
+        // if value is in range A-F
+        else {
+            switch(hex[i].toUpperCase()) {
+                case "A": binary += "1010"; 
+                break;
+                case "B": binary += "1011"; 
+                break;
+                case "C": binary += "1100"; 
+                break;
+                case "D": binary += "1101"; 
+                break;
+                case "E": binary += "1110"; 
+                break;
+                case "F": binary += "1011"; 
+                break;
+            }
+        }
+        console.log(binary);
+    }
+
+    // remove any leading zeros
+    for (let i = 0; i < binary.length; i++) {
+        if (binary[i] == 1) {
+            console.log(binary.slice(i));
+            binary = binary.slice(i);
+            console.log(binary + " after slice");
+            break;
+        }
+    }
+
+    return binary;
+}
+export {detectConversion, makeConversionCall, binaryToDecimal, decimalToBinary, binaryToHex, hexToBinary};
