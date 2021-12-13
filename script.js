@@ -11,8 +11,10 @@ document.getElementById("converter-button").addEventListener("click", (e) => {
     Conversions.makeConversionCall(conversion);
 });
 
-// #2. conversions to do: 
-    // hex to decimal
-    // decimal to hex
-
 // #3. random value generator logic and correct answer
+
+// #4. UI!
+
+// #5. validate user input
+
+// #6. animations of a step-by-step example of each conversion
