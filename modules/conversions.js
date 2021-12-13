@@ -57,12 +57,13 @@ function makeConversionCall(conversion) {
     } 
     // if "from" is decimal
     else if (conversion[0] == "d") {
-        document.getElementById("converter-to-textbox").value = decimalToBinary(value);
+        
         if (conversion[1] == "b") {
+            document.getElementById("converter-to-textbox").value = decimalToBinary(value);
         }
         // and if "to" is hex
         else {
-            
+            document.getElementById("converter-to-textbox").value = decimalToHex(value);
         }
     }
     // if "from" is hex
@@ -279,7 +280,55 @@ function hexToDecimal(value) {
 }
 
 function decimalToHex(value) {
+// select "convert from" textbox
+let decimal = value;
+let hex = "";
 
+/* To convert a decimal to binary, divide it repeatedly by 2 and note the remainders. take the reverse as the binary representation: https://www.cuemath.com/numbers/decimal-to-binary/ */
+
+// while we still have a number we need to divide
+while (decimal != 0) {
+    // if not, get remainder for hex digit
+    switch(decimal % 16) {
+        case 0: hex += "0"; 
+        break;
+        case 1: hex += "1"; 
+        break;
+        case 2: hex += "2"; 
+        break;
+        case 3: hex += "3"; 
+        break;
+        case 4: hex += "4"; 
+        break;
+        case 5: hex += "5"; 
+        break;
+        case 6: hex += "6"; 
+        break;
+        case 7: hex += "7"; 
+        break;
+        case 8: hex += "8"; 
+        break;
+        case 9: hex += "9"; 
+        break;
+        case 10: hex += "A"; 
+        break;
+        case 11: hex += "B"; 
+        break;
+        case 12: hex += "C"; 
+        break;
+        case 13: hex += "D"; 
+        break;
+        case 14: hex += "E"; 
+        break;
+        case 15: hex += "F"; 
+        break;
+    }
+    decimal = Math.floor(decimal / 16); 
+}
+
+// change from string to array, reverse, change back to string
+hex = hex.split("").reverse().join("");
+return hex;
 }
 
 
