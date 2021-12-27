@@ -1,0 +1,44 @@
+body {
+    background-color: #6E9887;
+    font-family: sans-serif;
+    margin: 0;
+    display: grid;
+    height: 80vh;
+}
+
+h1 {
+    background-color: #E9D758;
+    margin: 0;
+    padding: 3% 3%;
+}
+
+h1, h2, h5 {
+    font-family: 'Press Start 2P', cursive;
+}
+
+h2 {
+    background-color: #DDDBCB;
+    display: inline-block;
+    padding: 10px 10px 20px 10px;
+    border-radius: 10px 10px 0 0;
+    margin: 10% 10% 0 10%;
+}
+
+form {
+    background-color: #DDDBCB;
+    border-radius: 0 10px 10px 10px;
+    margin: 0 10%;
+}
+
+legend {
+    font-weight: bold;
+}
+
+fieldset {
+    border: 0;
+}
+
+footer h5 {
+    background-color: #E9D758;
+    display: inline-block;
+}
